@@ -13,3 +13,8 @@ export interface IChat {
   senderId: string;
   time: number;
 }
+export interface IUser {
+  name: string;
+  profileImage: string;
+  id: string;
+}
