@@ -18,3 +18,8 @@ export interface IUser {
   profileImage: string;
   id: string;
 }
+export interface IChannel {
+  profileImage: string,
+  name: string,
+  lastMessage: IChat
+}

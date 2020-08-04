@@ -10,7 +10,7 @@ export default (chat: Chat) => {
     text: chat.Text,
     time: chat.SendTime
   }
-  // console.log(brifiedChat.channelId)
+  console.log(brifiedChat.channelId)
   io.emit('message', {
     type: 'chat',
     content: brifiedChat

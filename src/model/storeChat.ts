@@ -17,8 +17,8 @@ mongoose.connect(`mongodb+srv://${username}:${password}@flowchat-db.rbnrr.mongod
 
 const ChatSchema = new Schema({
   text: String,
-  channelId: Number,
-  senderId: Number,
+  channelId: String,
+  senderId: String,
   time: Number
 })
 const Chat = mongoose.model('chat', ChatSchema)

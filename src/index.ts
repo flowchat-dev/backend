@@ -4,10 +4,12 @@ dotenv.config()
 import Express from 'express'
 import {createServer} from 'http'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 import { initSocket, io } from './storage'
 import router from './router'
 
 const app = Express()
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true

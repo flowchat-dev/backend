@@ -14,9 +14,8 @@ export default async (req: Request, res: Response) => {
     })
     throw 'channelId not provided'
   }
-  console.log(channelId)
   const channel = loco.ChannelManager.get(Long.fromString(channelId))
-  // console.log(channel)
+  
   if (!channel) {
     res.status(400).json({
       message: `channelId ${channelId} not found.`,
@@ -24,7 +23,8 @@ export default async (req: Request, res: Response) => {
     })
     throw `channelId ${channelId} not found.`
   }
-  const users = (await loco.UserManager.requestAllUserInfoList(channel))
+  const users = channel?.getUserInfoList()
+  
   if (!users) {
     res.status(400).json({
       message: `users of "${channel.Name}" not found`,
@@ -32,24 +32,10 @@ export default async (req: Request, res: Response) => {
     })
     throw `users of "${channel.Name}" not found`
   }
-  if ((users.status) !== 0) {
-    res.status(400).json({
-      message: `request failed. message: ${users?.result}`,
-      status: 400
-    })
-    throw `users of "${channel.Name}" not found`
-  }
-  if (!users.result) {
-    res.status(400).json({
-      message: `request result not found`,
-      status: 400
-    })
-    throw `users of "${channel.Name}" not found`
-  }
-  const brifiedUsers: IUser[] = users.result?.map(user => ({
-    id: user.Id.toString(),
-    name: user.Nickname,
-    profileImage: user.OriginalProfileImageURL
-  }))
+  const brifiedUsers = users.map(e => ({
+    id: e.Id.toString(),
+    name: e.Nickname,
+    profileImage: e.FullProfileImageURL
+  }) as IUser)
   res.json(brifiedUsers)
 }

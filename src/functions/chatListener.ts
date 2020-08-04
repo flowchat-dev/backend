@@ -9,7 +9,6 @@ export default () => {
   loco.on('message', async (chat: Chat) => {
     sendToClient(chat)
     storeToDB(chat)
-      console.log(chat.Channel.Id.toString())
-    // console.log(chat.Channel.getUserInfoList().map(e =>))
+    console.log(chat.Channel.Id.toString())
   })
 }
