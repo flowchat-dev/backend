@@ -1,13 +1,7 @@
 import { Chat } from "@storycraft/node-kakao"
-import storeChat from '../model/storeChat'
-import mongoose from './chatListener'
+import storeChat from '../model/chat/storeChat'
+import toProcessableChat from "./toProcessableChat"
 
 export default (chat: Chat) => {
-  storeChat({
-    text: chat.Text,
-    image: chat.AttachmentList[0],
-    channelId: chat.Channel.Id.toString(),
-    senderId: chat.Sender.Id.toString(),
-    time: chat.SendTime
-  })
+  storeChat(toProcessableChat(chat))
 }

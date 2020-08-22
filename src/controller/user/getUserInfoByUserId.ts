@@ -1,7 +1,7 @@
 import { KakaoAPI, Long } from "@storycraft/node-kakao";
 import { loco } from '../../storage'
 import { Request, Response } from "express";
-import { IUser } from "../../types/interfaces";
+import { IUser } from "../../types/commonType";
 
 // Channel Id와 User Id로 UserInfo를 반환한다
 export default async (req: Request, res: Response) => {

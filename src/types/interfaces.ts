@@ -6,20 +6,3 @@ export interface IRequestPasscode {
   os_name: 'android' | string;
   message?: string;
 }
-export interface IChat {
-  text: string;
-  image?: ChatAttachment;
-  channelId: string;
-  senderId: string;
-  time: number;
-}
-export interface IUser {
-  name: string;
-  profileImage: string;
-  id: string;
-}
-export interface IChannel {
-  profileImage: string,
-  name: string,
-  lastMessage: IChat
-}

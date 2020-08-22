@@ -1,13 +1,12 @@
-import { Router } from 'express'
-import requestVerification from '../../controller/auth/requestVerification'
-import loginWithVerifyCode from '../../controller/auth/loginWithVerifyCode'
-import login from '../../controller/auth/login'
+import { Router } from "express";
+import requestVerification from "../../controller/auth/requestVerification";
+import loginWithVerifyCode from "../../controller/auth/loginWithVerifyCode";
+import login from "../../controller/auth/login";
 
-// const upload = multer()
-const router = Router()
+const router = Router();
 
-router.post('/requestVerification', requestVerification)
-router.post('/loginWithVerifyCode', loginWithVerifyCode)
-router.post('/login', login)
+router.post("/requestVerification", requestVerification);
+router.post("/loginWithVerifyCode", loginWithVerifyCode);
+router.post("/login", login);
 
-export default router
+export default router;

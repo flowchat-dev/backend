@@ -4,7 +4,7 @@ import { loco } from '../../storage'
 import { Request, Response } from "express";
 
 const loginWithVerifyCode = async (req: Request, res: Response) => {
-  const { email, pw, uuid, deviceName } = process.env
+  const { email, pw, uuid/* 서비스ID */, deviceName } = process.env
   console.log(req.body)
   const verificationCode = Number(req.body?.verificationCode)
   if (!verificationCode) {

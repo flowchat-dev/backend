@@ -5,7 +5,7 @@ import Express from 'express'
 import {createServer} from 'http'
 import bodyParser from 'body-parser'
 import cors from 'cors'
-import { initSocket, io } from './storage'
+import { initSocket, io, loco } from './storage'
 import router from './router'
 
 const app = Express()
@@ -26,6 +26,10 @@ const server = createServer(app)
 initSocket(server)
 
 import './functions/socket'
+import autologin from "./functions/autologin";
 
 app.use(router)
-server.listen(PORT, () => console.log(`Server is running on ${PORT}`))
+server.listen(PORT, () => {
+  console.log(`Server is running on ${PORT}`)
+  autologin()
+})
