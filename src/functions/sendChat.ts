@@ -16,26 +16,24 @@ export default (
 ) => {
   const target = loco.ChannelManager.get(Long.fromString(channelId));
   if (attachment) {
-    console.log(
-      attachment
-        .map((e) => {
-          if (e.file && e.file.mimetype.includes("image")) {
-            const imageSize = getImageSize(e.file.buffer);
-            return {
-              height: imageSize.height,
-              width: imageSize.width,
-              data: e.file.buffer,
-              name: e.file.originalname,
-              type: ChatType.Photo,
-              ext: e.file.originalname.substr(
-                e.file.originalname.lastIndexOf(".") + 1
-              ),
-            } as MediaTemplates;
-          }
-        })
-        .filter(Boolean)
-        .map((e) => e && target?.sendMedia(e))
-    );
+    attachment
+      .map((e) => {
+        if (e.file && e.file.mimetype.includes("image")) {
+          const imageSize = getImageSize(e.file.buffer);
+          return {
+            height: imageSize.height,
+            width: imageSize.width,
+            data: e.file.buffer,
+            name: e.file.originalname,
+            type: ChatType.Photo,
+            ext: e.file.originalname.substr(
+              e.file.originalname.lastIndexOf(".") + 1
+            ),
+          } as MediaTemplates;
+        }
+      })
+      .filter(Boolean)
+      .map((e) => e && target?.sendMedia(e));
   }
   return target?.sendText(text);
 };
