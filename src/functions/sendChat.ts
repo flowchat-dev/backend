@@ -6,7 +6,6 @@ import getImageSize from "buffer-image-size";
 interface IArg {
   text: string;
   channelId: string;
-  attachment_type: "Photo" | "Reply";
 }
 
 export default (
@@ -16,7 +15,7 @@ export default (
   }[]
 ) => {
   const target = loco.ChannelManager.get(Long.fromString(channelId));
-  if (attachment)
+  if (attachment) {
     console.log(
       attachment
         .map((e) => {
@@ -37,5 +36,6 @@ export default (
         .filter(Boolean)
         .map((e) => e && target?.sendMedia(e))
     );
+  }
   return target?.sendText(text);
 };

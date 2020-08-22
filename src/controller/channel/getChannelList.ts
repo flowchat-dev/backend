@@ -1,10 +1,8 @@
 import { loco } from "../../storage";
-// import {IChannel} from '../../types/interfaces'
 import { Request, Response } from "express";
-import { Long, ChannelType, ChatChannel } from "@storycraft/node-kakao";
+import { ChatChannel } from "@storycraft/node-kakao";
 import getImageFromChannel from "../../functions/getImageFromChannel";
 import toProcessableChat from "../../functions/toProcessableChat";
-import { IChannel } from "../../types/commonType";
 import chatToTimeStamp from "../../functions/chatToTimeStamp";
 
 export const getChannelName = (channel: ChatChannel) => {
@@ -23,16 +21,12 @@ export default (req: Request, res: Response) => {
         chatToTimeStamp(toProcessableChat(channelInfo?.LastChat)),
       id: channelInfo?.Id.toString()!,
     }));
-  // .filter(Boolean).map
   if (!channelList) {
     res.send({
       status: 400,
       message: "Cannot get channelList",
     });
-    throw `Cannot get channelList`;
-    // return
+    throw "Cannot get channelList";
   }
-  console.log(channelList);
   res.send(channelList);
-  // return channelList
 };

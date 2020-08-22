@@ -6,7 +6,6 @@ import { io } from "../../storage";
 import sendToClient from "../../functions/sendToClient";
 
 const send = async (req: Request, res: Response) => {
-  console.log(req.files);
   const sent = await sendChat(req.body, [
     {
       file: (req.files as Express.Multer.File[])?.[0],
