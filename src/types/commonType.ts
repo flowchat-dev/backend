@@ -1,10 +1,10 @@
 import { ChatAttachment } from "@storycraft/node-kakao";
 export interface PhotoAttach {
-  url: string
+  url: string;
 }
 export interface ReplyAttach {
   originMessage: string;
-  originChat: string
+  originChat: string;
 }
 export interface EmoticonAttach extends PhotoAttach {
   alt?: string;
@@ -14,9 +14,10 @@ export interface EmoticonAttach extends PhotoAttach {
 export interface InfoAttach {
   text: string;
 }
+export type TAttach = PhotoAttach | ReplyAttach | InfoAttach | EmoticonAttach;
 export interface IChat {
   text: string;
-  attachment?: (PhotoAttach|ReplyAttach|InfoAttach|EmoticonAttach|undefined)[];
+  attachment?: (TAttach | undefined)[];
   channelId: string;
   senderId: string;
   chatId: string;
@@ -28,8 +29,8 @@ export interface IUser {
   id: string;
 }
 export interface IChannel {
-  profileImage: string | string[],
-  name: string,
-  lastMessage?: IChat|null;
-  id: string
+  profileImage: string | string[];
+  name: string;
+  lastMessage?: IChat | null;
+  id: string;
 }
