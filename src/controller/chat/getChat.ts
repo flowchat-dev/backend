@@ -18,10 +18,10 @@ const getChat = async (req: Request, res: Response) => {
     });
     return;
   }
-  // console.log(chatLog.result)
   const proceed = chatLog.result?.map(toProcessableChat);
-  // console.log(proceed);
-  // channel?.markChannelRead(Long.fromString('' + proceed?.slice(-1)[0].chatId))
+  loco.ChannelManager.get(longgedChannelId)?.markChannelRead(
+    Long.fromString("" + proceed?.slice(-1)[0].chatId)
+  );
   if (!proceed) {
     res.status(500).send({
       status: 500,
