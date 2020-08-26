@@ -6,11 +6,10 @@ import { io } from "../../storage";
 import sendToClient from "../../functions/sendToClient";
 
 const send = async (req: Request, res: Response) => {
-  const sent = await sendChat(req.body, [
-    {
-      file: (req.files as Express.Multer.File[])?.[0],
-    },
-  ]);
+  const attaches = (req.files as Express.Multer.File[]).map((e) => ({
+    file: e,
+  }));
+  const sent = await sendChat(req.body, attaches);
   if (!sent) {
     res.status(500).send({
       status: 500,
