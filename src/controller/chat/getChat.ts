@@ -8,8 +8,7 @@ const recursivelyGetChats = async (channelId: Long) => {
   let fullChatIds: string[] = [];
   let lastChatId = 0;
   while (true) {
-    console.log(lastChatId);
-    const { result, status } = await loco.ChatManager.getChatListFrom(
+    const { result } = await loco.ChatManager.getChatListFrom(
       channelId,
       lastChatId
     );
