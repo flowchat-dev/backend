@@ -1,14 +1,21 @@
 import { loco } from "../storage";
 import { Long } from "bson";
-import { ChatType, MediaTemplates } from "@storycraft/node-kakao";
+
+import {
+  ChatType,
+  MediaTemplates,
+  AttachmentTemplate,
+  MediaTemplate,
+} from "@storycraft/node-kakao";
 import getImageSize from "buffer-image-size";
+import sendToClient from "./sendToClient";
 
 interface IArg {
   text: string;
   channelId: string;
 }
 
-export default (
+export default async (
   { text, channelId }: IArg,
   attachment?: {
     file: Express.Multer.File;
@@ -18,22 +25,35 @@ export default (
   if (attachment) {
     attachment
       .map((e) => {
-        if (e.file && e.file.mimetype.includes("image")) {
+        const commonProperty = {
+          data: e.file.buffer,
+          name: e.file.originalname,
+          type: ChatType.File,
+          ext: e.file.originalname.substr(
+            e.file.originalname.lastIndexOf(".") + 1
+          ),
+        };
+        if (e.file.mimetype.includes("image")) {
           const imageSize = getImageSize(e.file.buffer);
+          console.log(e.file.mimetype);
           return {
+            ...commonProperty,
             height: imageSize.height,
             width: imageSize.width,
-            data: e.file.buffer,
-            name: e.file.originalname,
             type: ChatType.Photo,
-            ext: e.file.originalname.substr(
-              e.file.originalname.lastIndexOf(".") + 1
-            ),
           } as MediaTemplates;
-        }
+        } else return commonProperty as MediaTemplate<ChatType.File>;
       })
       .filter(Boolean)
-      .map((e) => e && target?.sendMedia(e));
+      .forEach(async (attach) => {
+        if (!attach) return;
+        const sent = await target?.sendMedia(attach);
+        if (!sent) throw new Error("Cannot send message");
+        sendToClient(sent);
+      });
   }
-  return target?.sendText(text);
+  const sent = await target?.sendText(text);
+  if (!sent) throw new Error("Cannot send message");
+  sendToClient(sent);
+  return sent;
 };
